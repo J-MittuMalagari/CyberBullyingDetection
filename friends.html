@@ -1,0 +1,86 @@
+{% load  static%}
+<html>
+
+<head>
+<title>project</title>
+<link rel="stylesheet" type="text/css" href="{% static '/style/style.css'%}" title="style" />
+</head>
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white">Friendly Networking</font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    <li><a href="/getposts">Posts</a></li>
+                    <li><a href="/viewfriends">Friends</a></li>
+                    <li><a href="/viewprofile">Profile</a></li>
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+
+			<div id="content">
+
+				<h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1>
+
+                <table style="width: 100%; border-spacing: 0;">
+
+                    <tr>
+						<td>Name</td>
+						<td>Email</td>
+                        <td>Mobile</td>
+                        <td>Address</td>
+                        <td>Photo</td>
+                        <td>send request</td>
+                    </tr>
+
+                    {% for result in results %}
+                        <tr>
+                            <td>{{result.name}}</td>
+                            <td>{{result.email}}</td>
+                            <td>{{result.mobile}}</td>
+                            <td>{{result.address}}</td>
+                            <td><img src="{% static ''%}{{ result.pic }}" height="100" width="100"></td>
+                            <td><a href="/sendfriendrequest?friendname={{ result.username }}">send request</a></td>
+                        </tr>
+                    {% endfor %}
+
+                    {% for frequest in requests %}
+                        <tr>
+                            <td>{{frequest.name}}</td>
+                            <td>{{frequest.email}}</td>
+                            <td>{{frequest.mobile}}</td>
+                            <td>{{frequest.address}}</td>
+                            <td><img src="{% static ''%}{{ frequest.pic }}" height="100" width="100"></td>
+                            <td><a href="/acceptfriendrequest?friendname={{ frequest.username }}">accept request</a></td>
+                        </tr>
+                    {% endfor %}
+
+                    {% for friend in friends %}
+                         <tr>
+                            <td>{{friend.name}}</td>
+                            <td>{{friend.email}}</td>
+                            <td>{{friend.mobile}}</td>
+                            <td>{{friend.address}}</td>
+                            <td><img src="{% static ''%}{{ friend.pic }}" height="100" width="100"></td>
+                            <td><a href="/unfriend?friendname={{ friend.username }}">un friend</a></td>
+                    {% endfor %}
+
+  				</table>
+            </div>
+        </div>
+	</div>
+</body>
+</html>
